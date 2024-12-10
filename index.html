@@ -2,10 +2,26 @@
 <html>
     <head>
         <script lang="javascript">
+			function generateSVG()
+            {
+				fetch('https://dengshan2018.github.io/CrazySVG/add-in/images/example.svg', {
+					method: "POST",
+					headers: {
+					  'Access-Control-Allow-Origin':'*',
+                      'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
+					}
+				  }).then(response => {
+					console.log('downloaded');
+				  })
+				  .catch(error => {
+					console.error('File download failed:', error);
+				  });
+			}
         </script>
     </head>
     <body>
         welcom!
         <br/>
+		<input type="button" id="button1" value="Click to launch custom protocol handler" onclick="generateSVG()"/>
     </body>
 </html>
