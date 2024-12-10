@@ -43,6 +43,12 @@
     function insertGeneratedImage() {
        serverUrl=$('#serverurl').val();
        method=$('#method').val();
+       opts = {
+            method: method,
+            headers: {
+              'Access-Control-Allow-Origin':'*',
+              'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
+            };
        if (method == "POST") {
            params = {prompt: $('#prompt').val()};
            opts = {
@@ -53,14 +59,6 @@
                 },
                 body: JSON.stringify(params),
               };
-       }
-       else {
-           opts = {
-                method: method,
-                headers: {
-                  'Access-Control-Allow-Origin':'*',
-                  'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
-                }
        }
        
        fetch(serverUrl, opts)
