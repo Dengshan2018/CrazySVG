@@ -55,7 +55,7 @@
                       showNotification('Error in insertImage:', '"' + asyncResult.error.message + '"');
                    }
                });
-		  })
+		  }))
 		  .catch(error => {
 			showNotification('File download failed:', error);
 		  });
