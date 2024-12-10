@@ -29,30 +29,39 @@
        });
     }
 
-    function insertGeneratedImage() {
-       const imagePicker = document.getElementById("imagePicker");
-       const file = imagePicker.files[0];
+	function blobToBase64(blob) {
+		return new Promise((resolve, reject) => {
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				resolve(reader.result.split(',')[1]);
+			};
+			reader.onerror = reject;
+			reader.readAsDataURL(blob);
+		});
+	}
 
-       if (file && (file.type === "image/png" || file.type === "image/jpeg" || file.type === "image/svg+xml")) {
-           const reader = new FileReader();
-           reader.onload = function(event) {
-               const base64Image = event.target.result.split(",")[1];
-               Office.context.document.setSelectedDataAsync(base64Image, { coercionType: Office.CoercionType.Image }, function (asyncResult) {
+    function insertGeneratedImage() {
+       fetch('https://dengshan2018.github.io/CrazySVG/add-in/images/example.svg', {
+			method: "GET",
+			headers: {
+			  'Access-Control-Allow-Origin':'*',
+			  'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
+			}
+		  })
+		  .then(response => response.blob())
+		  .then(blob => blobToBase64(blob).then( base64Image => {
+			Office.context.document.setSelectedDataAsync(base64Image, { coercionType: Office.CoercionType.Image }, function (asyncResult) {
                    if (asyncResult.status === Office.AsyncResultStatus.Failed) {
                       showNotification('Error in insertImage:', '"' + asyncResult.error.message + '"');
                    }
                });
-           };
-           reader.readAsDataURL(file);
-       } else {
-           showNotification('Error in insertImage:', "Please select a valid PNG, JPEG, or SVG image.");
-       }
+		  })
+		  .catch(error => {
+			showNotification('File download failed:', error);
+		  });
    }
 
     // Helper function for displaying notifications
     function showNotification(header, content) {
-        //$("#notificationHeader").text(header);
-        //$("#notificationBody").text(content);
-        //messageBanner.showBanner();
-        //messageBanner.toggleExpansion();
+        console.log(header + content);
     }
