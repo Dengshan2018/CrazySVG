@@ -18,7 +18,7 @@
   <DisplayName DefaultValue="DesignArt" />
   <Description DefaultValue="Design Art"/>
   <!-- Icon for your add-in. Used on installation screens and the add-ins dialog. -->
-  <IconUrl DefaultValue="https://localhost:44313/images/app.png" />
+  <IconUrl DefaultValue="https://dengshan2018.github.io/CrazySVG/add-in/images/app.png" />
 
   <SupportUrl DefaultValue="http://www.contoso.com" />
   <!-- Domains that will be allowed when navigating. For example, if you use ShowTaskpane and then have an href link, navigation will only be allowed if the domain is on this list. -->
@@ -30,7 +30,7 @@
     <Host Name="Presentation" />
   </Hosts>
   <DefaultSettings>
-    <SourceLocation DefaultValue="https://localhost:44313/home/home.html" />
+    <SourceLocation DefaultValue="https://dengshan2018.github.io/CrazySVG/add-in/home/home.html" />
   </DefaultSettings>
 
   <Permissions>ReadWriteDocument</Permissions>
