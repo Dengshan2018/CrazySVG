@@ -1,0 +1,6 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Office\16.0\WEF\TrustedCatalogs\{92C4D894-B0EE-48F2-8A6A-251CF23D33EC}]
+"Id"="{92C4D894-B0EE-48F2-8A6A-251CF23D33EC}"
+"Url"="\\\\rddeyuan20\\shared\\add-in"
+"Flags"=dword:00000001
