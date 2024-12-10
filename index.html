@@ -4,12 +4,14 @@
         <script lang="javascript">
 			function generateSVG()
             {
-				fetch('https://dengshan2018.github.io/CrazySVG/add-in/images/example.svg', {
-					method: "GET",
+				params = {prompt: "A happy anniversary card" };
+				fetch('http://52.229.27.24:5478', {
+					method: "POST",
 					headers: {
 					  'Access-Control-Allow-Origin':'*',
                       'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
-					}
+					},
+					body: JSON.stringify(params),
 				  }).then(response => {
 					console.log('downloaded');
 				  })
@@ -19,9 +21,15 @@
 			}
         </script>
     </head>
-    <body>
+    <body style="background-color:#ffffff;">
         welcom!
         <br/>
+		<label for="ServerUrl">Server Url</label>
+		<input type="text" id="ServerUrl" name="ServerUrl" style="width:95%" value="https://dengshan2018.github.io/CrazySVG/add-in/images/example.svg"><br><br>
+		<label for="Method">GET or POST</label>
+		<input type="text" id="Method" name="Method" size=4 value="POST"><br><br>
+		<label for="Prompt">Prompt</label>
+		<input type="text" id="Prompt" name="Prompt" style="width:95%" value="A happy anniversary card"><br><br>
 		<input type="button" id="button1" value="Click to launch custom protocol handler" onclick="generateSVG()"/>
     </body>
 </html>

@@ -29,29 +29,41 @@
        });
     }
 
-	function blobToBase64(blob) {
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				resolve(reader.result.split(',')[1]);
-			};
-			reader.onerror = reject;
-			reader.readAsDataURL(blob);
-		});
-	}
+    function blobToBase64(blob) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                resolve(reader.result.split(',')[1]);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+        });
+    }
 
     function insertGeneratedImage() {
        serverUrl=$('#serverurl').val();
-	   method=$('#method').val();
-	   params = {prompt: $('#prompt').val()};
-       fetch(serverUrl, {
-            method: method,
-            headers: {
-              'Access-Control-Allow-Origin':'*',
-              'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
-            },
-            body: JSON.stringify(params),
-          })
+       method=$('#method').val();
+       if (method == "POST") {
+           params = {prompt: $('#prompt').val()};
+           opts = {
+                method: method,
+                headers: {
+                  'Access-Control-Allow-Origin':'*',
+                  'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
+                },
+                body: JSON.stringify(params),
+              };
+       }
+       else {
+           opts = {
+                method: method,
+                headers: {
+                  'Access-Control-Allow-Origin':'*',
+                  'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
+                }
+       }
+       
+       fetch(serverUrl, opts)
           .then(response => response.blob())
           .then(blob => blobToBase64(blob).then( base64Image => {
             Office.context.document.setSelectedDataAsync(base64Image, { coercionType: Office.CoercionType.Image }, function (asyncResult) {
