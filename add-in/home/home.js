@@ -41,24 +41,29 @@
 	}
 
     function insertGeneratedImage() {
-       fetch('https://dengshan2018.github.io/CrazySVG/add-in/images/example.svg', {
-			method: "GET",
-			headers: {
-			  'Access-Control-Allow-Origin':'*',
-			  'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
-			}
-		  })
-		  .then(response => response.blob())
-		  .then(blob => blobToBase64(blob).then( base64Image => {
-			Office.context.document.setSelectedDataAsync(base64Image, { coercionType: Office.CoercionType.Image }, function (asyncResult) {
+       serverUrl=$('#serverurl').val();
+	   method=$('#method').val();
+	   params = {prompt: $('#prompt').val(); };
+	   body=
+       fetch(serverUrl, {
+            method: method,
+            headers: {
+              'Access-Control-Allow-Origin':'*',
+              'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
+            },
+            body: params
+          })
+          .then(response => response.blob())
+          .then(blob => blobToBase64(blob).then( base64Image => {
+            Office.context.document.setSelectedDataAsync(base64Image, { coercionType: Office.CoercionType.Image }, function (asyncResult) {
                    if (asyncResult.status === Office.AsyncResultStatus.Failed) {
                       showNotification('Error in insertImage:', '"' + asyncResult.error.message + '"');
                    }
                });
-		  }))
-		  .catch(error => {
-			showNotification('File download failed:', error);
-		  });
+          }))
+          .catch(error => {
+            showNotification('File download failed:', error);
+          });
    }
 
     // Helper function for displaying notifications
