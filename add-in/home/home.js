@@ -43,15 +43,14 @@
     function insertGeneratedImage() {
        serverUrl=$('#serverurl').val();
 	   method=$('#method').val();
-	   params = {prompt: $('#prompt').val(); };
-	   body=
+	   params = {prompt: $('#prompt').val()};
        fetch(serverUrl, {
             method: method,
             headers: {
               'Access-Control-Allow-Origin':'*',
               'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
             },
-            body: params
+            body: JSON.stringify(params),
           })
           .then(response => response.blob())
           .then(blob => blobToBase64(blob).then( base64Image => {
