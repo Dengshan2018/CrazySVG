@@ -41,27 +41,29 @@
     }
 
     function insertGeneratedImage() {
-       serverUrl=$('#serverurl').val();
-       method=$('#method').val();
-       opts = {
+        serverUrl=$('#serverurl').val();
+        method=$('#method').val();
+        opts = {
             method: method,
             headers: {
-              'Access-Control-Allow-Origin':'*',
-              'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
-            };
-       if (method == "POST") {
-           params = {prompt: $('#prompt').val()};
-           opts = {
+               'Access-Control-Allow-Origin':'*',
+               'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
+            }
+        };
+
+        if (method == "POST") {
+            params = {prompt: $('#prompt').val()};
+            opts = {
                 method: method,
                 headers: {
                   'Access-Control-Allow-Origin':'*',
                   'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'
                 },
                 body: JSON.stringify(params),
-              };
-       }
+            };
+        }
        
-       fetch(serverUrl, opts)
+        fetch(serverUrl, opts)
           .then(response => response.blob())
           .then(blob => blobToBase64(blob).then( base64Image => {
             Office.context.document.setSelectedDataAsync(base64Image, { coercionType: Office.CoercionType.Image }, function (asyncResult) {
@@ -73,7 +75,7 @@
           .catch(error => {
             showNotification('File download failed:', error);
           });
-   }
+    }
 
     // Helper function for displaying notifications
     function showNotification(header, content) {
