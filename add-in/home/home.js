@@ -41,6 +41,7 @@
     }
 
     function insertGeneratedImage() {
+        $('#loading-spinner').show(1000);
         serverUrl=$('#serverurl').val();
         method=$('#method').val();
         opts = {
@@ -70,10 +71,12 @@
                    if (asyncResult.status === Office.AsyncResultStatus.Failed) {
                       showNotification('Error in insertImage:', '"' + asyncResult.error.message + '"');
                    }
+                   $('#loading-spinner').hide();
                });
           }))
           .catch(error => {
             showNotification('File download failed:', error);
+            $('#loading-spinner').hide();
           });
     }
 
