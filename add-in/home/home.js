@@ -41,7 +41,7 @@
     }
 
     function insertGeneratedImage() {
-        $('#loading-spinner').show(1000);
+        $('#loading-spinner').show();
         serverUrl=$('#serverurl').val();
         method=$('#method').val();
         opts = {
@@ -67,11 +67,11 @@
         fetch(serverUrl, opts)
           .then(response => response.blob())
           .then(blob => blobToBase64(blob).then( base64Image => {
+            $('#loading-spinner').hide();
             Office.context.document.setSelectedDataAsync(base64Image, { coercionType: Office.CoercionType.Image }, function (asyncResult) {
                    if (asyncResult.status === Office.AsyncResultStatus.Failed) {
                       showNotification('Error in insertImage:', '"' + asyncResult.error.message + '"');
                    }
-                   $('#loading-spinner').hide();
                });
           }))
           .catch(error => {
